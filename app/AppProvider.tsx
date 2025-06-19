@@ -14,7 +14,6 @@ export const AppProvider = ({ children }: { children: React.ReactNode }) => {
         <ThemeProvider>
             <div className='h-16'>
                 <Header />
-                
             </div>
             {children}
         </ThemeProvider>

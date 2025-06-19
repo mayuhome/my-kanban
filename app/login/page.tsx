@@ -1,6 +1,6 @@
 import { LoginForm } from './LoginForm';
 
-export const LoginPage = () => {
+export default function LoginPage() {
     return (
         <div className="flex items-center justify-center h-minus-135">
             <LoginForm />
