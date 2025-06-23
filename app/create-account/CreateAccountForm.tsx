@@ -1,5 +1,6 @@
 'use client';
 
+import { OAuthSignIn } from '@/components/auth/OAuthSignIn';
 import { Icons } from '@/components/Icons';
 import { Button } from '@/components/ui/button';
 import {
@@ -79,6 +80,7 @@ export function CreateAccountForm() {
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           disabled={isLoading}
+          required
           />
         </div>
         <div className="grid gap-2">
@@ -87,6 +89,7 @@ export function CreateAccountForm() {
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           disabled={isLoading}
+          required
           />
         </div>
         <div className="grid gap-2">
@@ -98,35 +101,15 @@ export function CreateAccountForm() {
           />
         </div>
 
-        <Button className="w-full" disabled={isLoading}>
+        <Button className="w-full" type='submit' disabled={isLoading}>
         {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
           Create account
         </Button>
-
-        <div className="relative">
-          <div className="absolute inset-0 flex items-center">
-            <span className="w-full border-t" />
-          </div>
-          <div className="relative flex justify-center text-xs uppercase">
-            <span className="bg-background px-2 text-muted-foreground">
-              Or continue with
-            </span>
-          </div>
-        </div>
       </CardContent>
       <CardFooter>
-        <div className="grid grid-cols-2 gap-6 w-full">
-          <Button variant="outline">
-            <Icons.gitHub className="mr-2 h-4 w-4" />
-            Github
-          </Button>
-          <Button variant="outline">
-            <Icons.google className="mr-2 h-4 w-4" />
-            Google
-          </Button>
-        </div>
+        <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsLoading} />
       </CardFooter>
       </form>
       

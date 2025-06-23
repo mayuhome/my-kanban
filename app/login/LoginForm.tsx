@@ -1,5 +1,6 @@
 'use client';
 
+import { OAuthSignIn } from '@/components/auth/OAuthSignIn';
 import { Icons } from '@/components/Icons';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card'
@@ -67,9 +68,13 @@ export const LoginForm = () => {
                     <div className="grid gap-2">
                         <div className="flex items-center justify-between">
                             <Label htmlFor='password'>Password</Label>
-                            <Link href={'/forgot-password'} className='text-xs text-blue-500'>Fotgot password?</Link>
+                            <Link href={'/forgot-password'} className='text-xs text-blue-500'>
+                                Forgot password?
+                            </Link>
                         </div>
-                        <Input id='password' type='password'
+                        <Input 
+                        id='password' 
+                        type='password'
                         required
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
@@ -84,16 +89,7 @@ export const LoginForm = () => {
 
                 </CardContent>
                 <CardFooter>
-                    <div className="grid grid-cols-2 gap-6 w-full">
-                        <Button variant={'outline'}>
-                            <Icons.gitHub className='mr-2 h-4 w-4' />                      
-                            Github
-                        </Button>
-                        <Button variant={'outline'}>
-                            <Icons.google className='mr-2 h-4 w-4' />                      
-                            Google
-                        </Button>
-                    </div>
+                    <OAuthSignIn isLoading={isLoading} onLoadingChange={setIsLoading} />
                 </CardFooter>
             </form>
         </Card>

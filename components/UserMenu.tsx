@@ -1,11 +1,34 @@
-import { CircleUser, CreditCard, LogOut, Plus, ProjectorIcon, UserIcon } from 'lucide-react';
+'use client';
+import { CircleUser, CreditCard, LogOut, Plus, UserIcon } from 'lucide-react';
 import { Button } from './ui/button';
 import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
 import Link from 'next/link';
+import { User } from '@supabase/supabase-js';
+import { useRouter } from 'next/navigation';
+import { auth } from '@/utils/auth';
+import { toast } from 'sonner';
+import Image from 'next/image';
 
+interface UserMenuProps {
+    user: User;
+}
 
-export const UserMenu = () => {
-    const handleSignOut = async () => (console.log('signing out'));
+export const UserMenu = ({user}: UserMenuProps) => {
+
+    const router = useRouter();
+
+    const handleSignOut = async () => {
+        try {
+            await auth.signOut();
+            router.push('/login');
+            router.refresh();
+        } catch (error) {
+            console.log(error);
+            toast.error('Sign Out Error', {
+                description: 'There was an error signing out',
+            });
+        };
+    };
 
     return (
         <DropdownMenu>
@@ -14,7 +37,17 @@ export const UserMenu = () => {
                 size={'icon'}
                 className='relative h-9 w-9 rounded-full border bg-background'
                 >
-                    <CircleUser className='h-5 w-5'/>
+                          {user.user_metadata.avatar_url ? (
+                <Image
+                src={user.user_metadata.avatar_url}
+                alt={user.email || ''}
+                fill
+                className="rounded-full object-cover"
+                referrerPolicy="no-referrer"
+                />
+          ) : (
+            <CircleUser className="h-5 w-5" />
+          )}
                     <span className='sr-only'>Open user menu</span>
                 </Button>
             </DropdownMenuTrigger>
